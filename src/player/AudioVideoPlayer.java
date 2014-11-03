@@ -15,8 +15,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
+import org.gstreamer.Bus;
 import org.gstreamer.Format;
 import org.gstreamer.Gst;
+import org.gstreamer.GstObject;
 import org.gstreamer.State;
 import org.gstreamer.elements.PlayBin2;
 import org.gstreamer.lowlevel.GstElementAPI;
@@ -43,15 +45,30 @@ public class AudioVideoPlayer{
         args = Gst.init("AudioVideoPlayer", args);
         playbin2 = new PlayBin2("AudioVideoPlayer");
         
-        aboutToFinishListener = new PlayBin2.ABOUT_TO_FINISH() {
-
+        playbin2.getBus().connect(new Bus.EOS() {
             @Override
-            public void aboutToFinish(PlayBin2 pb) {
-                myGUI.aboutToFinish();
+            public void endOfStream(GstObject go) {
+                System.out.println("Finished playing file");
+                //Gst.quit();
+                myGUI.streamFinished();
+                playbin2.setState(State.NULL);
             }
-        };
+        });
         
-        playbin2.connect(aboutToFinishListener);
+        playbin2.getBus().connect(new Bus.ERROR() {
+            public void errorMessage(GstObject source, int code, String message) {
+                System.out.println("Error occurred: " + message);
+                Gst.quit();
+            }
+        });
+        playbin2.getBus().connect(new Bus.STATE_CHANGED() {
+            public void stateChanged(GstObject source, State old, State current, State pending) {
+                if (source == playbin2) {
+                    System.out.println("Pipeline state changed from " + old + " to " + current);
+                }
+            }
+        });
+
         
     }
     
@@ -134,6 +151,7 @@ public class AudioVideoPlayer{
                     myGUI.setLabelTime(theTime);
                     int currentPosition = (int)playbin2.queryPosition().toMillis();
                     myGUI.setSliderTime(currentPosition);
+                    System.out.println("test");
                     try {
                         Thread.sleep(200);
                     } catch (InterruptedException ex) {

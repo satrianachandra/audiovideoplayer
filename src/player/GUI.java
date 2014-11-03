@@ -318,7 +318,7 @@ public class GUI extends javax.swing.JFrame {
         repaint();
     }
     
-    public void aboutToFinish(){
+    public void streamFinished(){
         buttonPause.setVisible(false);
         buttonPlay.setVisible(true);
     }
