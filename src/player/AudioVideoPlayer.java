@@ -8,14 +8,20 @@ package player;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
+import org.gstreamer.Format;
 import org.gstreamer.Gst;
 import org.gstreamer.State;
 import org.gstreamer.elements.PlayBin2;
 import org.gstreamer.lowlevel.GstElementAPI;
+import org.gstreamer.lowlevel.GstMessageAPI;
+import org.gstreamer.query.SeekingQuery;
 import org.gstreamer.swing.VideoComponent;
 
 /**
@@ -59,12 +65,14 @@ public class AudioVideoPlayer{
         //myGUI.getContentPane().add(videoComponent, BorderLayout.CENTER);
         //myGUI.revalidate();
         //myGUI.repaint();
+        updateTimeSlider();
         playbin2.setState(State.PLAYING);
     }
     
     public void play(){
         if (absFileName!=null){
             if (playbin2.getState()==State.PAUSED){
+                updateTimeSlider();
                 playbin2.setState(State.PLAYING);
             }else if(playbin2.getState()==State.PLAYING){
                 playbin2.setState(State.NULL);
@@ -106,6 +114,37 @@ public class AudioVideoPlayer{
         if (playbin2!=null){
             playbin2.setVolumePercent(volume);
         }
+    }
+    
+    public void updateTimeSlider(){
+        
+        
+        new Thread(new Runnable() {
+            int maxDuration =0;
+            @Override
+            public void run() {
+                while(playbin2.getState()==State.PLAYING){
+
+                    if (maxDuration == 0){
+                        maxDuration = (int)playbin2.queryDuration().toMillis();
+                        myGUI.setSliderTimeMax(maxDuration);
+                    }
+                    //query the time
+                    String theTime = playbin2.queryPosition().toString();
+                    myGUI.setLabelTime(theTime);
+                    int currentPosition = (int)playbin2.queryPosition().toMillis();
+                    myGUI.setSliderTime(currentPosition);
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(AudioVideoPlayer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
+                
+                
+            }
+        }).start();
     }
     
     public static void main(String[]args){
