@@ -5,17 +5,28 @@
  */
 package player;
 
+import java.awt.Component;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
+import org.gstreamer.State;
+
 /**
  *
  * @author chandra
  */
 public class GUI extends javax.swing.JFrame {
+    
+    AudioVideoPlayer myPlayer;
 
     /**
      * Creates new form GUI
      */
     public GUI() {
         initComponents();
+        buttonPause.setLocation(buttonPlay.getLocation());
+        buttonPause.setVisible(false);
+        setVisible(true);
     }
 
     /**
@@ -35,12 +46,27 @@ public class GUI extends javax.swing.JFrame {
         sliderVolume = new javax.swing.JSlider();
         buttonFullScreen = new javax.swing.JButton();
         jSlider1 = new javax.swing.JSlider();
+        buttonOpenFile = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textAreaInfo = new javax.swing.JTextArea();
+        panelVideo = new javax.swing.JPanel();
+        buttonPause = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         buttonPlay.setText("Play");
+        buttonPlay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPlayActionPerformed(evt);
+            }
+        });
 
         buttonStop.setText("stop");
+        buttonStop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonStopActionPerformed(evt);
+            }
+        });
 
         buttonRewind.setText("<<");
 
@@ -50,50 +76,124 @@ public class GUI extends javax.swing.JFrame {
 
         buttonFullScreen.setText("[ ]");
 
+        buttonOpenFile.setText("Open File");
+        buttonOpenFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonOpenFileActionPerformed(evt);
+            }
+        });
+
+        textAreaInfo.setColumns(20);
+        textAreaInfo.setRows(5);
+        jScrollPane1.setViewportView(textAreaInfo);
+
+        panelVideo.setLayout(new java.awt.BorderLayout());
+
+        buttonPause.setText("Pause");
+        buttonPause.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPauseActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(buttonPlay)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(buttonStop)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonRewind)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonFastForward)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 217, Short.MAX_VALUE)
-                .addComponent(buttonMute)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(sliderVolume, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonFullScreen)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(buttonPause)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonPlay)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(buttonStop)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonRewind)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonFastForward)
+                        .addGap(112, 112, 112)
+                        .addComponent(buttonMute)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(sliderVolume, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonFullScreen)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buttonOpenFile)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
-            .addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(276, Short.MAX_VALUE)
-                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sliderVolume, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(buttonPlay)
-                                .addComponent(buttonStop)
-                                .addComponent(buttonRewind)
-                                .addComponent(buttonFastForward)
-                                .addComponent(buttonMute))
-                            .addComponent(buttonFullScreen, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addContainerGap())))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(buttonOpenFile)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 133, Short.MAX_VALUE))
+                    .addComponent(panelVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(buttonPlay)
+                            .addComponent(buttonStop)
+                            .addComponent(buttonRewind)
+                            .addComponent(buttonFastForward)
+                            .addComponent(buttonPause)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(sliderVolume, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonMute, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(buttonFullScreen, javax.swing.GroupLayout.Alignment.TRAILING)))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void buttonPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPlayActionPerformed
+        myPlayer.play();
+        if (myPlayer.absFileName!=null){
+            buttonPause.setVisible(true);
+            buttonPlay.setVisible(false);
+        }
+    }//GEN-LAST:event_buttonPlayActionPerformed
+
+    private void buttonOpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenFileActionPerformed
+        final JFileChooser fc = new JFileChooser();
+        int returnVal = fc.showOpenDialog(GUI.this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            String absPathFile = fc.getSelectedFile().getAbsolutePath();
+            textAreaInfo.setText("Playing "+absPathFile);
+            myPlayer.play(absPathFile);
+            buttonPlay.setVisible(false);
+            buttonPause.setVisible(true);
+        }
+
+    }//GEN-LAST:event_buttonOpenFileActionPerformed
+
+    private void buttonStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStopActionPerformed
+        if (myPlayer.absFileName!=null){
+            myPlayer.stop();
+            buttonPause.setVisible(false);
+            buttonPlay.setVisible(true);
+        }
+    }//GEN-LAST:event_buttonStopActionPerformed
+
+    private void buttonPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPauseActionPerformed
+        myPlayer.pause();
+        buttonPause.setVisible(false);
+        buttonPlay.setVisible(true);
+    }//GEN-LAST:event_buttonPauseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -125,19 +225,45 @@ public class GUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUI().setVisible(true);
+                GUI theGUI = new GUI();
+                theGUI.setVisible(true);
             }
         });
+        
+        
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonFastForward;
     private javax.swing.JButton buttonFullScreen;
     private javax.swing.JButton buttonMute;
+    private javax.swing.JButton buttonOpenFile;
+    private javax.swing.JButton buttonPause;
     private javax.swing.JButton buttonPlay;
     private javax.swing.JButton buttonRewind;
     private javax.swing.JButton buttonStop;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSlider jSlider1;
+    private javax.swing.JPanel panelVideo;
     private javax.swing.JSlider sliderVolume;
+    private javax.swing.JTextArea textAreaInfo;
     // End of variables declaration//GEN-END:variables
+
+    public void setPlayer(AudioVideoPlayer player){
+        this.myPlayer = player;
+    }
+    
+    public void setPanelVideo(JComponent c){
+        panelVideo.removeAll();
+        panelVideo.add(c);
+        revalidate();
+        repaint();
+    }
+    
+    public void aboutToFinish(){
+        buttonPause.setVisible(false);
+        buttonPlay.setVisible(true);
+    }
+    
 }

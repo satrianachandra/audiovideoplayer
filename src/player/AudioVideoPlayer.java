@@ -9,46 +9,91 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import org.gstreamer.Gst;
 import org.gstreamer.State;
 import org.gstreamer.elements.PlayBin2;
+import org.gstreamer.lowlevel.GstElementAPI;
 import org.gstreamer.swing.VideoComponent;
 
 /**
  *
  * @author chandra
  */
-public class AudioVideoPlayer {
-    public static void main(String[] args) {
-        args = Gst.init("AudioPlayer", args);
-        final PlayBin2 playbin = new PlayBin2("AudioPlayer");
-        playbin.setInputFile(new File(args[0]));
-        /*
-        playbin.setVideoSink(ElementFactory.make("fakesink", "videosink"));
-        playbin.setState(State.PLAYING);
-        Gst.main();
-        playbin.setState(State.NULL);
-         */
+public class AudioVideoPlayer{
+    
+    private GUI myGUI;
+    PlayBin2 playbin2;
+    
+    String absFileName=null;
+    PlayBin2.ABOUT_TO_FINISH aboutToFinishListener;
+    
+    public AudioVideoPlayer(String[]args){
+        this.myGUI =  new GUI();
+        myGUI.setPlayer(this);
+        args = Gst.init("AudioVideoPlayer", args);
+        playbin2 = new PlayBin2("AudioVideoPlayer");
         
-        SwingUtilities.invokeLater(new Runnable() {
+        aboutToFinishListener = new PlayBin2.ABOUT_TO_FINISH() {
 
-            public void run() {
-                VideoComponent videoComponent = new VideoComponent();
-                playbin.setVideoSink(videoComponent.getElement());
-
-                JFrame frame = new JFrame("VideoPlayer");
-                frame.getContentPane().add(videoComponent, BorderLayout.CENTER);
-                frame.setPreferredSize(new Dimension(640, 480));
-                frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-                frame.pack();
-                frame.setVisible(true);
-                playbin.setState(State.PLAYING);
+            @Override
+            public void aboutToFinish(PlayBin2 pb) {
+                myGUI.aboutToFinish();
             }
-        });
-        Gst.main();
-        playbin.setState(State.NULL);
-
+        };
+        
+        playbin2.connect(aboutToFinishListener);
+        
     }
+    
+    public void play(String absFileName){
+        this.absFileName = absFileName;
+        playbin2.setInputFile(new File(absFileName));
+        VideoComponent videoComponent = new VideoComponent();
+        playbin2.setVideoSink(videoComponent.getElement());
+        myGUI.setPanelVideo(videoComponent);
+        
+        //myGUI.getContentPane().add(videoComponent, BorderLayout.CENTER);
+        //myGUI.revalidate();
+        //myGUI.repaint();
+        playbin2.setState(State.PLAYING);
+    }
+    
+    public void play(){
+        if (absFileName!=null){
+            if (playbin2.getState()==State.PAUSED){
+                playbin2.setState(State.PLAYING);
+            }else if(playbin2.getState()==State.PLAYING){
+                playbin2.setState(State.NULL);
+                play(absFileName);
+            }else if(playbin2.getState()==State.NULL){
+                play(absFileName);
+            }
+        }else{
+            
+        }
+    }
+    
+    public void pause(){
+        if (playbin2!=null){
+            if (playbin2.getState()==State.PLAYING){
+                playbin2.setState(State.PAUSED);
+            }
+        }
+    }
+
+    public void stop(){
+        if (playbin2!=null){
+            if (playbin2.getState()==State.PLAYING){
+                playbin2.setState(State.NULL);
+            }
+        }
+    }
+    
+    public static void main(String[]args){
+        AudioVideoPlayer myPlayer = new AudioVideoPlayer(args);
+    }
+    
 }
