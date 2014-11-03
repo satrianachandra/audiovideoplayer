@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import org.gstreamer.Bus;
+import org.gstreamer.ClockTime;
 import org.gstreamer.Format;
 import org.gstreamer.Gst;
 import org.gstreamer.GstObject;
@@ -35,6 +36,7 @@ public class AudioVideoPlayer{
     private GUI myGUI;
     PlayBin2 playbin2;
     int currentVolume;
+    public boolean animationMode = true;
     
     String absFileName=null;
     PlayBin2.ABOUT_TO_FINISH aboutToFinishListener;
@@ -140,18 +142,25 @@ public class AudioVideoPlayer{
             int maxDuration =0;
             @Override
             public void run() {
-                while(playbin2.getState()==State.PLAYING){
+                while(playbin2.getState()==State.PLAYING||playbin2.getState()==State.PAUSED){
 
                     if (maxDuration == 0){
                         maxDuration = (int)playbin2.queryDuration().toMillis();
                         myGUI.setSliderTimeMax(maxDuration);
+                        //myGUI.setProgressBarTimeMax(maxDuration);
                     }
                     //query the time
                     String theTime = playbin2.queryPosition().toString();
                     myGUI.setLabelTime(theTime);
-                    int currentPosition = (int)playbin2.queryPosition().toMillis();
-                    myGUI.setSliderTime(currentPosition);
-                    System.out.println("test");
+                    if (animationMode){
+                        int currentPosition = (int)playbin2.queryPosition().toMillis();
+                        myGUI.setSliderTime(currentPosition);
+                    }
+                    
+                    //myGUI.setProgressBarTime(currentPosition);
+                    
+                    
+                    
                     try {
                         Thread.sleep(200);
                     } catch (InterruptedException ex) {
@@ -163,6 +172,14 @@ public class AudioVideoPlayer{
                 
             }
         }).start();
+    }
+    
+    public void seekTo(int time){
+        if (playbin2!=null){
+            if (playbin2.getState()==State.PLAYING){
+                playbin2.seek(ClockTime.fromMillis(time));
+            }
+        }
     }
     
     public static void main(String[]args){
