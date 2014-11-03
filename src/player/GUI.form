@@ -38,15 +38,16 @@
                       <Component id="buttonRewind" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="buttonFastForward" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
                       <Component id="buttonMute" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="sliderVolume" min="-2" pref="93" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="buttonFullScreen" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="78" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="buttonOpenFile" min="-2" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="98" max="-2" attributes="0"/>
@@ -64,31 +65,26 @@
                       <Component id="buttonOpenFile" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="117" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="133" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="132" max="32767" attributes="0"/>
                   </Group>
                   <Component id="panelVideo" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jSlider1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="buttonPlay" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="buttonStop" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="buttonRewind" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="buttonFastForward" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="buttonPause" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                      <Component id="sliderVolume" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="buttonMute" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="buttonFullScreen" alignment="1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
               <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="buttonPlay" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="buttonStop" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="buttonRewind" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="buttonFastForward" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="buttonPause" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="sliderVolume" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="buttonMute" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="buttonFullScreen" alignment="1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -124,8 +120,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Mute"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonMuteActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JSlider" name="sliderVolume">
+      <Properties>
+        <Property name="value" type="int" value="100"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="buttonFullScreen">
       <Properties>

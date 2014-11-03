@@ -9,6 +9,9 @@ import java.awt.Component;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import org.gstreamer.State;
 
 /**
@@ -27,6 +30,19 @@ public class GUI extends javax.swing.JFrame {
         buttonPause.setLocation(buttonPlay.getLocation());
         buttonPause.setVisible(false);
         setVisible(true);
+        
+        sliderVolume.addChangeListener(new ChangeListener() {
+
+            @Override
+            public void stateChanged(ChangeEvent ce) {
+                JSlider source = (JSlider)ce.getSource();
+                //if (!source.getValueIsAdjusting()) {
+                    int volume = (int)source.getValue();
+                    myPlayer.setVolume(volume);
+               // }
+                
+            }
+        });
     }
 
     /**
@@ -73,6 +89,13 @@ public class GUI extends javax.swing.JFrame {
         buttonFastForward.setText(">>");
 
         buttonMute.setText("Mute");
+        buttonMute.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonMuteActionPerformed(evt);
+            }
+        });
+
+        sliderVolume.setValue(100);
 
         buttonFullScreen.setText("[ ]");
 
@@ -115,13 +138,14 @@ public class GUI extends javax.swing.JFrame {
                         .addComponent(buttonRewind)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonFastForward)
-                        .addGap(112, 112, 112)
+                        .addGap(81, 81, 81)
                         .addComponent(buttonMute)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(sliderVolume, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonFullScreen)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonFullScreen)
+                        .addGap(31, 31, 31)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(buttonOpenFile)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -136,25 +160,22 @@ public class GUI extends javax.swing.JFrame {
                         .addComponent(buttonOpenFile)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 133, Short.MAX_VALUE))
+                        .addGap(0, 132, Short.MAX_VALUE))
                     .addComponent(panelVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(buttonPlay)
-                            .addComponent(buttonStop)
-                            .addComponent(buttonRewind)
-                            .addComponent(buttonFastForward)
-                            .addComponent(buttonPause)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(sliderVolume, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(buttonMute, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(buttonFullScreen, javax.swing.GroupLayout.Alignment.TRAILING)))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(buttonPlay)
+                        .addComponent(buttonStop)
+                        .addComponent(buttonRewind)
+                        .addComponent(buttonFastForward)
+                        .addComponent(buttonPause))
+                    .addComponent(sliderVolume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonMute)
+                    .addComponent(buttonFullScreen))
+                .addGap(18, 18, 18))
         );
 
         pack();
@@ -194,6 +215,17 @@ public class GUI extends javax.swing.JFrame {
         buttonPause.setVisible(false);
         buttonPlay.setVisible(true);
     }//GEN-LAST:event_buttonPauseActionPerformed
+
+    private void buttonMuteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMuteActionPerformed
+        if (buttonMute.getText().equalsIgnoreCase("Mute")){
+            myPlayer.mute();
+            buttonMute.setText("UnMute");
+        }else{
+            myPlayer.unMute();
+            buttonMute.setText("Mute");
+        }
+        
+    }//GEN-LAST:event_buttonMuteActionPerformed
 
     /**
      * @param args the command line arguments

@@ -26,6 +26,7 @@ public class AudioVideoPlayer{
     
     private GUI myGUI;
     PlayBin2 playbin2;
+    int currentVolume;
     
     String absFileName=null;
     PlayBin2.ABOUT_TO_FINISH aboutToFinishListener;
@@ -89,6 +90,21 @@ public class AudioVideoPlayer{
             if (playbin2.getState()==State.PLAYING){
                 playbin2.setState(State.NULL);
             }
+        }
+    }
+    
+    public void mute(){
+        currentVolume = playbin2.getVolumePercent();
+        playbin2.setVolumePercent(0);
+    }
+    
+    public void unMute(){
+        playbin2.setVolumePercent(currentVolume);
+    }
+    
+    public void setVolume(int volume){
+        if (playbin2!=null){
+            playbin2.setVolumePercent(volume);
         }
     }
     
