@@ -10,5 +10,19 @@ package model;
  * @author chandra
  */
 public class MediaInfo {
+    private String title;
+    private String duration;
     
+    public MediaInfo(String title,String duration){
+        this.title = title;
+        this.duration = duration;
+    }
+    
+    public String getTitle(){
+        return this.title;
+    }
+    
+    public String getDuration(){
+        return this.duration;
+    }
 }

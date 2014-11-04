@@ -6,6 +6,8 @@
 package player;
 
 import java.awt.Component;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -13,8 +15,13 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.JTable;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import model.MediaInfo;
 import org.gstreamer.State;
 
 /**
@@ -30,6 +37,7 @@ public class GUI extends javax.swing.JFrame {
      */
     public GUI() {
         initComponents();
+        tablePlayList.setColumnSelectionAllowed(false);
         buttonPause.setLocation(buttonPlay.getLocation());
         buttonPause.setVisible(false);
         setVisible(true);
@@ -71,6 +79,7 @@ public class GUI extends javax.swing.JFrame {
                     
                     if (!myPlayer.animationMode){
                         int time = (int)source.getValue();
+                        
                         myPlayer.seekTo(time);
                         myPlayer.animationMode  = true;
                     }
@@ -80,6 +89,20 @@ public class GUI extends javax.swing.JFrame {
                 
             }
         });
+        
+        tablePlayList.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent me) {
+                JTable table =(JTable) me.getSource();
+                Point p = me.getPoint();
+                int row = table.rowAtPoint(p);
+                if (me.getClickCount() == 2) {
+                    myPlayer.play(myPlayer.playList.get(row).getTitle());
+                    buttonPause.setVisible(true);
+                    buttonPlay.setVisible(false);
+                }
+            }
+        });
+        
     }
 
     /**
@@ -100,12 +123,12 @@ public class GUI extends javax.swing.JFrame {
         buttonFullScreen = new javax.swing.JButton();
         sliderTime = new javax.swing.JSlider();
         buttonOpenFile = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        textAreaInfo = new javax.swing.JTextArea();
         panelVideo = new javax.swing.JPanel();
         buttonPause = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         labelTime = new javax.swing.JLabel();
+        scrollPanePlayList = new javax.swing.JScrollPane();
+        tablePlayList = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -155,16 +178,12 @@ public class GUI extends javax.swing.JFrame {
 
         sliderTime.setValue(0);
 
-        buttonOpenFile.setText("Open File");
+        buttonOpenFile.setText("Add File");
         buttonOpenFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonOpenFileActionPerformed(evt);
             }
         });
-
-        textAreaInfo.setColumns(20);
-        textAreaInfo.setRows(5);
-        jScrollPane1.setViewportView(textAreaInfo);
 
         panelVideo.setLayout(new java.awt.BorderLayout());
 
@@ -178,6 +197,27 @@ public class GUI extends javax.swing.JFrame {
         jLabel1.setText("The Coolest Audio/Video Player Ever");
 
         labelTime.setText("00:00:00");
+
+        tablePlayList.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Title", "Length"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablePlayList.setColumnSelectionAllowed(true);
+        tablePlayList.getTableHeader().setReorderingAllowed(false);
+        scrollPanePlayList.setViewportView(tablePlayList);
+        tablePlayList.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -209,11 +249,11 @@ public class GUI extends javax.swing.JFrame {
                                 .addGap(31, 31, 31)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(buttonOpenFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(buttonOpenFile, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(labelTime, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 16, Short.MAX_VALUE))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(scrollPanePlayList, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -229,17 +269,17 @@ public class GUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(buttonOpenFile)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 203, Short.MAX_VALUE))
+                        .addComponent(scrollPanePlayList, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 49, Short.MAX_VALUE))
                     .addComponent(panelVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(sliderTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(labelTime)
-                        .addGap(20, 20, 20))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(sliderTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGap(25, 25, 25)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(buttonPlay)
@@ -257,7 +297,21 @@ public class GUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPlayActionPerformed
-        myPlayer.play();
+        
+        //myPlayer.play();
+        if (myPlayer.playbin2.getState()==State.PAUSED){
+            myPlayer.play();
+        }else{
+            if (myPlayer.playList.size()>0){
+                //myPlayer.play(myPlayer.playList.get(0).getTitle());
+                if (tablePlayList.getSelectedRow()!=-1){
+                    myPlayer.play(myPlayer.playList.get(tablePlayList.getSelectedRow()).getTitle());
+                }else{
+                    myPlayer.play(myPlayer.playList.get(0).getTitle());
+                }
+            }
+        }
+        
         if (myPlayer.absFileName!=null){
             buttonPause.setVisible(true);
             buttonPlay.setVisible(false);
@@ -266,13 +320,23 @@ public class GUI extends javax.swing.JFrame {
 
     private void buttonOpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenFileActionPerformed
         final JFileChooser fc = new JFileChooser();
+        FileFilter fileFilter = new FileNameExtensionFilter(
+        "Audio/Video files(mp3,mp4,ogg,ogx,ogv,avi)", "mp3","mp4","ogg","ogx","ogv","avi");
+        fc.setAcceptAllFileFilterUsed(false);
+        fc.addChoosableFileFilter(fileFilter);
+        
         int returnVal = fc.showOpenDialog(GUI.this);
+        
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             String absPathFile = fc.getSelectedFile().getAbsolutePath();
-            textAreaInfo.setText("Playing "+absPathFile);
-            myPlayer.play(absPathFile);
-            buttonPlay.setVisible(false);
-            buttonPause.setVisible(true);
+            String fileName = fc.getSelectedFile().getName();
+            
+            myPlayer.playList.add(new MediaInfo(absPathFile, ""));
+            DefaultTableModel model =(DefaultTableModel) tablePlayList.getModel();
+            model.addRow(new Object[]{fileName,""} );
+            //myPlayer.play(absPathFile);
+            //buttonPlay.setVisible(false);
+            //buttonPause.setVisible(true);
         }
 
     }//GEN-LAST:event_buttonOpenFileActionPerformed
@@ -306,9 +370,11 @@ public class GUI extends javax.swing.JFrame {
         if (buttonFastForward.getText().equalsIgnoreCase("stop")){
             myPlayer.normalSpeed();
             buttonFastForward.setText(">>");
+            buttonRewind.setEnabled(true);
         }else{
             myPlayer.fastForward();
             buttonFastForward.setText("stop");
+            buttonRewind.setEnabled(false);
         }
         
     }//GEN-LAST:event_buttonFastForwardActionPerformed
@@ -317,9 +383,11 @@ public class GUI extends javax.swing.JFrame {
         if (buttonRewind.getText().equalsIgnoreCase("stop")){
             myPlayer.normalSpeed();
             buttonRewind.setText("<<");
+            buttonFastForward.setEnabled(true);
         }else{
             myPlayer.rewind();
             buttonRewind.setText("stop");
+            buttonFastForward.setEnabled(false);
         }
     }//GEN-LAST:event_buttonRewindActionPerformed
 
@@ -377,12 +445,12 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton buttonRewind;
     private javax.swing.JButton buttonStop;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelTime;
     private javax.swing.JPanel panelVideo;
+    private javax.swing.JScrollPane scrollPanePlayList;
     private javax.swing.JSlider sliderTime;
     private javax.swing.JSlider sliderVolume;
-    private javax.swing.JTextArea textAreaInfo;
+    private javax.swing.JTable tablePlayList;
     // End of variables declaration//GEN-END:variables
 
     public void setPlayer(AudioVideoPlayer player){
@@ -412,6 +480,7 @@ public class GUI extends javax.swing.JFrame {
     public void setLabelTime(String time){
         labelTime.setText(time);
     }
+    
     
     
 }
