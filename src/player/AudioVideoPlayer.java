@@ -7,12 +7,18 @@ package player;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import org.gstreamer.Bus;
@@ -42,6 +48,7 @@ public class AudioVideoPlayer{
     
     String absFileName=null;
     PlayBin2.ABOUT_TO_FINISH aboutToFinishListener;
+    VideoComponent videoComponent=null;
     
     public AudioVideoPlayer(String[]args){
         this.myGUI =  new GUI();
@@ -79,7 +86,7 @@ public class AudioVideoPlayer{
     public void play(String absFileName){
         this.absFileName = absFileName;
         playbin2.setInputFile(new File(absFileName));
-        VideoComponent videoComponent = new VideoComponent();
+        videoComponent = new VideoComponent();
         playbin2.setVideoSink(videoComponent.getElement());
         myGUI.setPanelVideo(videoComponent);
         
@@ -207,6 +214,37 @@ public class AudioVideoPlayer{
             playbin2.seek(1, Format.TIME, SeekFlags.FLUSH|SeekFlags.ACCURATE, SeekType.SET, currentPosition, SeekType.NONE, 0);
             
         }
+    }
+    
+    public void goFullScreen(){
+        if (videoComponent!=null){
+            final JFrame fsFrame = new JFrame();
+            fsFrame.getContentPane().setPreferredSize( Toolkit.getDefaultToolkit().getScreenSize());
+            fsFrame.getContentPane().add(videoComponent, BorderLayout.CENTER);
+            fsFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            fsFrame.setUndecorated(true);
+            fsFrame.pack();
+            fsFrame.setResizable(false);
+            
+            // on ESC key close frame
+            fsFrame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Cancel"); //$NON-NLS-1$
+            fsFrame.getRootPane().getActionMap().put("Cancel", new AbstractAction(){ //$NON-NLS-1$
+                public void actionPerformed(ActionEvent e)
+                {
+                    fsFrame.setVisible(false);
+                    myGUI.setVisible(true);
+                    myGUI.setPanelVideo(videoComponent);
+                }
+            });
+            
+            
+            fsFrame.setVisible(true);
+            myGUI.setVisible(false);
+        
+        
+        }
+        
     }
     
     public static void main(String[]args){

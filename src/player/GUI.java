@@ -311,7 +311,6 @@ public class GUI extends javax.swing.JFrame {
             buttonFastForward.setText("stop");
         }
         
-        
     }//GEN-LAST:event_buttonFastForwardActionPerformed
 
     private void buttonRewindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRewindActionPerformed
@@ -325,6 +324,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonRewindActionPerformed
 
     private void buttonFullScreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonFullScreenActionPerformed
+        myPlayer.goFullScreen();
         
     }//GEN-LAST:event_buttonFullScreenActionPerformed
 
