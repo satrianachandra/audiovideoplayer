@@ -20,6 +20,8 @@ import org.gstreamer.ClockTime;
 import org.gstreamer.Format;
 import org.gstreamer.Gst;
 import org.gstreamer.GstObject;
+import org.gstreamer.SeekFlags;
+import org.gstreamer.SeekType;
 import org.gstreamer.State;
 import org.gstreamer.elements.PlayBin2;
 import org.gstreamer.lowlevel.GstElementAPI;
@@ -179,6 +181,31 @@ public class AudioVideoPlayer{
             if (playbin2.getState()==State.PLAYING){
                 playbin2.seek(ClockTime.fromMillis(time));
             }
+        }
+    }
+    
+    public void fastForward(){
+        
+        if (playbin2!=null){
+            long currentPosition = playbin2.queryPosition(Format.TIME);
+            playbin2.seek(1*1.2, Format.TIME, SeekFlags.FLUSH|SeekFlags.ACCURATE, SeekType.SET, currentPosition, SeekType.NONE, 0);
+            
+        }   
+    }
+    
+    public void rewind(){
+        if (playbin2!=null){
+            long currentPosition = playbin2.queryPosition(Format.TIME);
+            playbin2.seek(1*(-1.2), Format.TIME, SeekFlags.FLUSH|SeekFlags.ACCURATE, SeekType.SET, 0, SeekType.SET, currentPosition);
+            
+        }
+    }
+    
+    public void normalSpeed(){
+        if (playbin2!=null){
+            long currentPosition = playbin2.queryPosition(Format.TIME);
+            playbin2.seek(1, Format.TIME, SeekFlags.FLUSH|SeekFlags.ACCURATE, SeekType.SET, currentPosition, SeekType.NONE, 0);
+            
         }
     }
     

@@ -132,11 +132,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="&lt;&lt;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonRewindActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="buttonFastForward">
       <Properties>
         <Property name="text" type="java.lang.String" value="&gt;&gt;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonFastForwardActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="buttonMute">
       <Properties>
@@ -155,6 +161,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="[ ]"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonFullScreenActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JSlider" name="sliderTime">
       <Properties>

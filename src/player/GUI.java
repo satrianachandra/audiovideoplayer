@@ -124,8 +124,18 @@ public class GUI extends javax.swing.JFrame {
         });
 
         buttonRewind.setText("<<");
+        buttonRewind.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonRewindActionPerformed(evt);
+            }
+        });
 
         buttonFastForward.setText(">>");
+        buttonFastForward.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonFastForwardActionPerformed(evt);
+            }
+        });
 
         buttonMute.setText("Mute");
         buttonMute.addActionListener(new java.awt.event.ActionListener() {
@@ -137,6 +147,11 @@ public class GUI extends javax.swing.JFrame {
         sliderVolume.setValue(100);
 
         buttonFullScreen.setText("[ ]");
+        buttonFullScreen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonFullScreenActionPerformed(evt);
+            }
+        });
 
         sliderTime.setValue(0);
 
@@ -286,6 +301,32 @@ public class GUI extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_buttonMuteActionPerformed
+
+    private void buttonFastForwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonFastForwardActionPerformed
+        if (buttonFastForward.getText().equalsIgnoreCase("stop")){
+            myPlayer.normalSpeed();
+            buttonFastForward.setText(">>");
+        }else{
+            myPlayer.fastForward();
+            buttonFastForward.setText("stop");
+        }
+        
+        
+    }//GEN-LAST:event_buttonFastForwardActionPerformed
+
+    private void buttonRewindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRewindActionPerformed
+        if (buttonRewind.getText().equalsIgnoreCase("stop")){
+            myPlayer.normalSpeed();
+            buttonRewind.setText("<<");
+        }else{
+            myPlayer.rewind();
+            buttonRewind.setText("stop");
+        }
+    }//GEN-LAST:event_buttonRewindActionPerformed
+
+    private void buttonFullScreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonFullScreenActionPerformed
+        
+    }//GEN-LAST:event_buttonFullScreenActionPerformed
 
     /**
      * @param args the command line arguments
