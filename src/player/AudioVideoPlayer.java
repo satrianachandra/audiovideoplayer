@@ -11,6 +11,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
+import model.MediaInfo;
 import org.gstreamer.Bus;
 import org.gstreamer.ClockTime;
 import org.gstreamer.Format;
@@ -29,11 +32,13 @@ import org.gstreamer.GstObject;
 import org.gstreamer.SeekFlags;
 import org.gstreamer.SeekType;
 import org.gstreamer.State;
+import org.gstreamer.TagList;
 import org.gstreamer.elements.PlayBin2;
 import org.gstreamer.lowlevel.GstElementAPI;
 import org.gstreamer.lowlevel.GstMessageAPI;
 import org.gstreamer.query.SeekingQuery;
 import org.gstreamer.swing.VideoComponent;
+
 
 /**
  *
@@ -46,6 +51,10 @@ public class AudioVideoPlayer{
     int currentVolume;
     public boolean animationMode = true;
     
+    //long currentTime=-1;
+    
+    public List<MediaInfo>playList;
+    
     String absFileName=null;
     PlayBin2.ABOUT_TO_FINISH aboutToFinishListener;
     VideoComponent videoComponent=null;
@@ -53,6 +62,8 @@ public class AudioVideoPlayer{
     public AudioVideoPlayer(String[]args){
         this.myGUI =  new GUI();
         myGUI.setPlayer(this);
+        playList = new ArrayList<>();
+        
         args = Gst.init("AudioVideoPlayer", args);
         playbin2 = new PlayBin2("AudioVideoPlayer");
         
@@ -80,11 +91,27 @@ public class AudioVideoPlayer{
             }
         });
 
+        //to get tags
+        /*
+        playbin2.getBus().connect(new Bus.TAG() {
+
+            public void tagsFound(GstObject source, TagList tagList) {
+                for (String tagName : tagList.getTagNames()) {
+                    for (Object tagData : tagList.getValues(tagName)) {
+                        System.out.printf("[%s]=%s\n", tagName, tagData);
+                    }
+                }
+            }
+        });
+        */
+        
+        
         
     }
     
     public void play(String absFileName){
         this.absFileName = absFileName;
+        playbin2.setState(State.NULL);
         playbin2.setInputFile(new File(absFileName));
         videoComponent = new VideoComponent();
         playbin2.setVideoSink(videoComponent.getElement());
@@ -186,7 +213,11 @@ public class AudioVideoPlayer{
     public void seekTo(int time){
         if (playbin2!=null){
             if (playbin2.getState()==State.PLAYING){
+                ClockTime currentPosition = playbin2.queryPosition();
                 playbin2.seek(ClockTime.fromMillis(time));
+                System.out.println(playbin2.queryPosition().toString());
+                //currentTime=playbin2.queryPosition(Format.TIME);
+                //System.out.println(currentTime);
             }
         }
     }
@@ -194,24 +225,29 @@ public class AudioVideoPlayer{
     public void fastForward(){
         
         if (playbin2!=null){
-            long currentPosition = playbin2.queryPosition(Format.TIME);
-            playbin2.seek(1*1.2, Format.TIME, SeekFlags.FLUSH|SeekFlags.ACCURATE, SeekType.SET, currentPosition, SeekType.NONE, 0);
-            
+            ClockTime currentPosition = playbin2.queryPosition();
+            playbin2.seek(1*1.2, Format.TIME, SeekFlags.FLUSH|SeekFlags.ACCURATE, SeekType.SET, currentPosition.toNanos(), SeekType.NONE, 0);
         }   
     }
     
     public void rewind(){
         if (playbin2!=null){
-            long currentPosition = playbin2.queryPosition(Format.TIME);
-            playbin2.seek(1*(-1.2), Format.TIME, SeekFlags.FLUSH|SeekFlags.ACCURATE, SeekType.SET, 0, SeekType.SET, currentPosition);
-            
+            //if (currentTime== -1){
+                ClockTime currentPosition = playbin2.queryPosition();
+                System.out.println(currentPosition);
+                playbin2.seek(1*(-1.2), Format.TIME, SeekFlags.FLUSH|SeekFlags.ACCURATE, SeekType.SET, 0, SeekType.SET, currentPosition.toNanos());
+                playbin2.setState(State.PLAYING);
+            //}else{
+            //    playbin2.seek(1*(-1.2), Format.TIME, SeekFlags.FLUSH|SeekFlags.ACCURATE, SeekType.SET, 0, SeekType.SET, currentTime);
+            //}
         }
     }
     
     public void normalSpeed(){
         if (playbin2!=null){
             long currentPosition = playbin2.queryPosition(Format.TIME);
-            playbin2.seek(1, Format.TIME, SeekFlags.FLUSH|SeekFlags.ACCURATE, SeekType.SET, currentPosition, SeekType.NONE, 0);
+            long duration = playbin2.queryDuration(Format.TIME);
+            playbin2.seek(1, Format.TIME, SeekFlags.FLUSH|SeekFlags.ACCURATE, SeekType.SET, currentPosition, SeekType.SET, duration);
             
         }
     }
@@ -250,5 +286,7 @@ public class AudioVideoPlayer{
     public static void main(String[]args){
         AudioVideoPlayer myPlayer = new AudioVideoPlayer(args);
     }
+    
+    
     
 }
