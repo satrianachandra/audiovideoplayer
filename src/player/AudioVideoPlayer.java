@@ -230,19 +230,34 @@ public class AudioVideoPlayer{
         }   
     }
     
+       public void twoxfastForward(){
+        
+        if (playbin2!=null){
+            long currentPosition = playbin2.queryPosition(Format.TIME);
+            playbin2.seek(2*1.2, Format.TIME, SeekFlags.FLUSH|SeekFlags.ACCURATE, SeekType.SET, currentPosition, SeekType.NONE, 0);
+            
+        }   
+    }
+    
+    
+    
+    
     public void rewind(){
         if (playbin2!=null){
-            //if (currentTime== -1){
-                ClockTime currentPosition = playbin2.queryPosition();
-                System.out.println(currentPosition);
-                playbin2.seek(1*(-1.2), Format.TIME, SeekFlags.FLUSH|SeekFlags.ACCURATE, SeekType.SET, 0, SeekType.SET, currentPosition.toNanos());
-                playbin2.setState(State.PLAYING);
-            //}else{
-            //    playbin2.seek(1*(-1.2), Format.TIME, SeekFlags.FLUSH|SeekFlags.ACCURATE, SeekType.SET, 0, SeekType.SET, currentTime);
-            //}
+            long currentPosition = playbin2.queryPosition(Format.TIME);
+            playbin2.seek(1*(-1.2), Format.TIME, SeekFlags.FLUSH|SeekFlags.ACCURATE, SeekType.SET, 0, SeekType.SET, currentPosition);
+            
         }
     }
     
+    public void twoxrewind(){
+        if (playbin2!=null){
+            long currentPosition = playbin2.queryPosition(Format.TIME);
+            playbin2.seek(2*(-1.2), Format.TIME, SeekFlags.FLUSH|SeekFlags.ACCURATE, SeekType.SET, 0, SeekType.SET, currentPosition);
+            
+        }
+    }
+  
     public void normalSpeed(){
         if (playbin2!=null){
             long currentPosition = playbin2.queryPosition(Format.TIME);
