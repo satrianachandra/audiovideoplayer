@@ -129,38 +129,52 @@ public class GUI extends javax.swing.JFrame {
         labelTime = new javax.swing.JLabel();
         scrollPanePlayList = new javax.swing.JScrollPane();
         tablePlayList = new javax.swing.JTable();
+        unmutebutton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        buttontwoxrewind = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        buttonnormalspeed = new javax.swing.JButton();
+        buttontwoxforward = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        buttonPlay.setText("Play");
+        buttonPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/player/image/play.jpg"))); // NOI18N
+        buttonPlay.setBorderPainted(false);
+        buttonPlay.setContentAreaFilled(false);
         buttonPlay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonPlayActionPerformed(evt);
             }
         });
 
-        buttonStop.setText("stop");
+        buttonStop.setIcon(new javax.swing.ImageIcon(getClass().getResource("/player/image/stop.jpg"))); // NOI18N
+        buttonStop.setBorderPainted(false);
+        buttonStop.setContentAreaFilled(false);
         buttonStop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonStopActionPerformed(evt);
             }
         });
 
-        buttonRewind.setText("<<");
+        buttonRewind.setIcon(new javax.swing.ImageIcon(getClass().getResource("/player/image/rewind.jpg"))); // NOI18N
+        buttonRewind.setBorderPainted(false);
+        buttonRewind.setContentAreaFilled(false);
         buttonRewind.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonRewindActionPerformed(evt);
             }
         });
 
-        buttonFastForward.setText(">>");
+        buttonFastForward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/player/image/forward.jpg"))); // NOI18N
+        buttonFastForward.setBorderPainted(false);
+        buttonFastForward.setContentAreaFilled(false);
         buttonFastForward.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonFastForwardActionPerformed(evt);
             }
         });
 
-        buttonMute.setText("Mute");
+        buttonMute.setIcon(new javax.swing.ImageIcon(getClass().getResource("/player/image/mute.jpg"))); // NOI18N
         buttonMute.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonMuteActionPerformed(evt);
@@ -169,7 +183,7 @@ public class GUI extends javax.swing.JFrame {
 
         sliderVolume.setValue(100);
 
-        buttonFullScreen.setText("[ ]");
+        buttonFullScreen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/player/image/fullscreen-12-512_converted.jpg"))); // NOI18N
         buttonFullScreen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonFullScreenActionPerformed(evt);
@@ -187,7 +201,11 @@ public class GUI extends javax.swing.JFrame {
 
         panelVideo.setLayout(new java.awt.BorderLayout());
 
-        buttonPause.setText("Pause");
+        buttonPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/player/image/pause.jpg"))); // NOI18N
+        buttonPause.setBorderPainted(false);
+        buttonPause.setContentAreaFilled(false);
+        buttonPause.setName(""); // NOI18N
+        buttonPause.setVerifyInputWhenFocusTarget(false);
         buttonPause.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonPauseActionPerformed(evt);
@@ -219,6 +237,26 @@ public class GUI extends javax.swing.JFrame {
         scrollPanePlayList.setViewportView(tablePlayList);
         tablePlayList.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
+        unmutebutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/player/image/unmute.jpg"))); // NOI18N
+        unmutebutton.setBorderPainted(false);
+        unmutebutton.setContentAreaFilled(false);
+
+        jLabel2.setText("Volume");
+
+        buttontwoxrewind.setIcon(new javax.swing.ImageIcon(getClass().getResource("/player/image/twoxrewind.jpg"))); // NOI18N
+        buttontwoxrewind.setBorderPainted(false);
+        buttontwoxrewind.setContentAreaFilled(false);
+
+        jLabel3.setText("Time");
+
+        buttonnormalspeed.setIcon(new javax.swing.ImageIcon(getClass().getResource("/player/image/stopblue.jpg"))); // NOI18N
+        buttonnormalspeed.setBorderPainted(false);
+        buttonnormalspeed.setContentAreaFilled(false);
+
+        buttontwoxforward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/player/image/twoxforward.jpg"))); // NOI18N
+        buttontwoxforward.setBorderPainted(false);
+        buttontwoxforward.setContentAreaFilled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -234,26 +272,38 @@ public class GUI extends javax.swing.JFrame {
                                 .addComponent(buttonPause)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(buttonPlay)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(buttonStop)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(buttonRewind)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(buttontwoxrewind)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(buttonnormalspeed)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(buttontwoxforward)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(buttonFastForward)
-                                .addGap(81, 81, 81)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(buttonMute)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(sliderVolume, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(unmutebutton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(buttonFullScreen)
-                                .addGap(31, 31, 31)))
+                                .addGap(0, 54, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(buttonOpenFile, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                            .addComponent(buttonOpenFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(scrollPanePlayList, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelTime, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(scrollPanePlayList, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelTime, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(sliderVolume, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 82, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -270,26 +320,36 @@ public class GUI extends javax.swing.JFrame {
                         .addComponent(buttonOpenFile)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(scrollPanePlayList, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 49, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)))
                     .addComponent(panelVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(sliderTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(labelTime)
-                        .addGap(25, 25, 25)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(buttonPlay)
-                        .addComponent(buttonStop)
-                        .addComponent(buttonRewind)
-                        .addComponent(buttonFastForward)
-                        .addComponent(buttonPause))
-                    .addComponent(sliderVolume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonMute)
-                    .addComponent(buttonFullScreen))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(sliderTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(labelTime)
+                                .addGap(25, 25, 25)))
+                        .addGap(93, 93, 93)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(buttonPlay)
+                                .addComponent(buttonStop)
+                                .addComponent(buttonRewind)
+                                .addComponent(buttonPause))
+                            .addComponent(buttonMute)
+                            .addComponent(unmutebutton)
+                            .addComponent(buttonFullScreen)
+                            .addComponent(buttontwoxrewind)
+                            .addComponent(buttonnormalspeed)
+                            .addComponent(buttonFastForward)
+                            .addComponent(buttontwoxforward, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(sliderVolume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -444,13 +504,19 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton buttonPlay;
     private javax.swing.JButton buttonRewind;
     private javax.swing.JButton buttonStop;
+    private javax.swing.JButton buttonnormalspeed;
+    private javax.swing.JButton buttontwoxforward;
+    private javax.swing.JButton buttontwoxrewind;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel labelTime;
     private javax.swing.JPanel panelVideo;
     private javax.swing.JScrollPane scrollPanePlayList;
     private javax.swing.JSlider sliderTime;
     private javax.swing.JSlider sliderVolume;
     private javax.swing.JTable tablePlayList;
+    private javax.swing.JButton unmutebutton;
     // End of variables declaration//GEN-END:variables
 
     public void setPlayer(AudioVideoPlayer player){

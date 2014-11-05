@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
@@ -30,33 +30,47 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="sliderTime" max="32767" attributes="0"/>
                           <Component id="panelVideo" alignment="1" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
                               <Component id="buttonPause" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="buttonPlay" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="buttonStop" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="buttonRewind" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
+                              <Component id="buttontwoxrewind" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="buttonnormalspeed" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="buttontwoxforward" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="buttonFastForward" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="buttonMute" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="sliderVolume" min="-2" pref="93" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="unmutebutton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="buttonFullScreen" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="54" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="buttonOpenFile" pref="158" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Component id="labelTime" min="-2" pref="142" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="buttonOpenFile" max="32767" attributes="0"/>
+                          <Component id="scrollPanePlayList" pref="361" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="labelTime" min="-2" pref="142" max="-2" attributes="0"/>
+                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="sliderVolume" min="-2" pref="125" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="82" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="scrollPanePlayList" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -79,32 +93,45 @@
                       <Component id="buttonOpenFile" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="scrollPanePlayList" min="-2" pref="285" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="49" max="32767" attributes="0"/>
+                      <EmptySpace pref="57" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <Component id="panelVideo" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="sliderTime" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="sliderTime" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="labelTime" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                              <Component id="buttonPlay" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="buttonStop" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="buttonRewind" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="buttonPause" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="buttonMute" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="unmutebutton" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="buttonFullScreen" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="buttontwoxrewind" min="-2" max="-2" attributes="0"/>
+                          <Component id="buttonnormalspeed" min="-2" max="-2" attributes="0"/>
+                          <Component id="buttonFastForward" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="buttontwoxforward" min="-2" pref="76" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="labelTime" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                      <Component id="buttonPlay" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="buttonStop" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="buttonRewind" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="buttonFastForward" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="buttonPause" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="sliderVolume" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="buttonMute" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="buttonFullScreen" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="sliderVolume" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -114,7 +141,11 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="buttonPlay">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Play"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/player/image/play.jpg"/>
+        </Property>
+        <Property name="borderPainted" type="boolean" value="false"/>
+        <Property name="contentAreaFilled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonPlayActionPerformed"/>
@@ -122,7 +153,11 @@
     </Component>
     <Component class="javax.swing.JButton" name="buttonStop">
       <Properties>
-        <Property name="text" type="java.lang.String" value="stop"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/player/image/stop.jpg"/>
+        </Property>
+        <Property name="borderPainted" type="boolean" value="false"/>
+        <Property name="contentAreaFilled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonStopActionPerformed"/>
@@ -130,7 +165,11 @@
     </Component>
     <Component class="javax.swing.JButton" name="buttonRewind">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&lt;&lt;"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/player/image/rewind.jpg"/>
+        </Property>
+        <Property name="borderPainted" type="boolean" value="false"/>
+        <Property name="contentAreaFilled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonRewindActionPerformed"/>
@@ -138,7 +177,11 @@
     </Component>
     <Component class="javax.swing.JButton" name="buttonFastForward">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&gt;&gt;"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/player/image/forward.jpg"/>
+        </Property>
+        <Property name="borderPainted" type="boolean" value="false"/>
+        <Property name="contentAreaFilled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonFastForwardActionPerformed"/>
@@ -146,7 +189,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="buttonMute">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Mute"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/player/image/mute.jpg"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonMuteActionPerformed"/>
@@ -159,7 +204,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="buttonFullScreen">
       <Properties>
-        <Property name="text" type="java.lang.String" value="[ ]"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/player/image/fullscreen-12-512_converted.jpg"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonFullScreenActionPerformed"/>
@@ -184,7 +231,13 @@
     </Container>
     <Component class="javax.swing.JButton" name="buttonPause">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Pause"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/player/image/pause.jpg"/>
+        </Property>
+        <Property name="borderPainted" type="boolean" value="false"/>
+        <Property name="contentAreaFilled" type="boolean" value="false"/>
+        <Property name="name" type="java.lang.String" value="" noResource="true"/>
+        <Property name="verifyInputWhenFocusTarget" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonPauseActionPerformed"/>
@@ -234,5 +287,51 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="unmutebutton">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/player/image/unmute.jpg"/>
+        </Property>
+        <Property name="borderPainted" type="boolean" value="false"/>
+        <Property name="contentAreaFilled" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Volume"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="buttontwoxrewind">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/player/image/twoxrewind.jpg"/>
+        </Property>
+        <Property name="borderPainted" type="boolean" value="false"/>
+        <Property name="contentAreaFilled" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Time"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="buttonnormalspeed">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/player/image/stopblue.jpg"/>
+        </Property>
+        <Property name="borderPainted" type="boolean" value="false"/>
+        <Property name="contentAreaFilled" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="buttontwoxforward">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/player/image/twoxforward.jpg"/>
+        </Property>
+        <Property name="borderPainted" type="boolean" value="false"/>
+        <Property name="contentAreaFilled" type="boolean" value="false"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>
