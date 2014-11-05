@@ -1,1 +1,12 @@
-An Audio/Video Player built in Java using the GStreamer framework
+An Audio/Video Player built in Java using the GStreamer framework that allow users to play a previously 
+recorded audio and video files (like ogg,AVI, mpeg, mp4 files). 
+
+Features:
+Play and pause the audio/video
+Fast-forward and rewind with twice the speed 
+Drag point to choose a start time 
+Time information, elapsed time etc.
+Full screen and normal mode
+Volume control
+Mute and unmute volume
+Play list to load the recorded files
