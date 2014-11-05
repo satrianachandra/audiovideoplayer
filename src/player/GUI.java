@@ -29,9 +29,9 @@ import org.gstreamer.State;
  * @author chandra
  */
 public class GUI extends javax.swing.JFrame {
-    
+
     AudioVideoPlayer myPlayer;
-    
+
     /**
      * Creates new form GUI
      */
@@ -40,22 +40,34 @@ public class GUI extends javax.swing.JFrame {
         tablePlayList.setColumnSelectionAllowed(false);
         buttonPause.setLocation(buttonPlay.getLocation());
         buttonPause.setVisible(false);
+        unmutebutton.setLocation(buttonMute.getLocation());
+        unmutebutton.setVisible(false);
+
+        buttontwoxrewind.setLocation(buttonRewind.getLocation());
+        buttontwoxrewind.setVisible(false);
+        buttonnormalspeed.setLocation(buttonRewind.getLocation());
+        buttonnormalspeed.setVisible(false);
+
+        buttontwoxforward.setLocation(buttonFastForward.getLocation());
+        buttontwoxforward.setVisible(false);
+        buttonnormalspeed2.setLocation(buttonFastForward.getLocation());
+        buttonnormalspeed2.setVisible(false);
+
         setVisible(true);
-        
+
         sliderVolume.addChangeListener(new ChangeListener() {
 
             @Override
             public void stateChanged(ChangeEvent ce) {
-                JSlider source = (JSlider)ce.getSource();
+                JSlider source = (JSlider) ce.getSource();
                 //if (!source.getValueIsAdjusting()) {
-                    int volume = (int)source.getValue();
-                    myPlayer.setVolume(volume);
-               // }
-                
+                int volume = (int) source.getValue();
+                myPlayer.setVolume(volume);
+                // }
+
             }
         });
-        
-        
+
         sliderTime.addMouseMotionListener(new MouseMotionListener() {
 
             @Override
@@ -68,31 +80,30 @@ public class GUI extends javax.swing.JFrame {
                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
-        
+
         sliderTime.addChangeListener(new ChangeListener() {
 
             @Override
             public void stateChanged(ChangeEvent ce) {
-                JSlider source = (JSlider)ce.getSource();
-                
+                JSlider source = (JSlider) ce.getSource();
+
                 if (!source.getValueIsAdjusting()) {
-                    
-                    if (!myPlayer.animationMode){
-                        int time = (int)source.getValue();
-                        
+
+                    if (!myPlayer.animationMode) {
+                        int time = (int) source.getValue();
+
                         myPlayer.seekTo(time);
-                        myPlayer.animationMode  = true;
+                        myPlayer.animationMode = true;
                     }
-                    
+
                 }
-                
-                
+
             }
         });
-        
+
         tablePlayList.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent me) {
-                JTable table =(JTable) me.getSource();
+                JTable table = (JTable) me.getSource();
                 Point p = me.getPoint();
                 int row = table.rowAtPoint(p);
                 if (me.getClickCount() == 2) {
@@ -102,7 +113,7 @@ public class GUI extends javax.swing.JFrame {
                 }
             }
         });
-        
+
     }
 
     /**
@@ -135,6 +146,7 @@ public class GUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         buttonnormalspeed = new javax.swing.JButton();
         buttontwoxforward = new javax.swing.JButton();
+        buttonnormalspeed2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -212,7 +224,9 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(57, 115, 224));
         jLabel1.setText("The Coolest Audio/Video Player Ever");
+        jLabel1.setPreferredSize(new java.awt.Dimension(434, 28));
 
         labelTime.setText("00:00:00");
 
@@ -240,22 +254,51 @@ public class GUI extends javax.swing.JFrame {
         unmutebutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/player/image/unmute.jpg"))); // NOI18N
         unmutebutton.setBorderPainted(false);
         unmutebutton.setContentAreaFilled(false);
+        unmutebutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                unmutebuttonActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Volume");
 
         buttontwoxrewind.setIcon(new javax.swing.ImageIcon(getClass().getResource("/player/image/twoxrewind.jpg"))); // NOI18N
         buttontwoxrewind.setBorderPainted(false);
         buttontwoxrewind.setContentAreaFilled(false);
+        buttontwoxrewind.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttontwoxrewindActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Time");
 
         buttonnormalspeed.setIcon(new javax.swing.ImageIcon(getClass().getResource("/player/image/stopblue.jpg"))); // NOI18N
         buttonnormalspeed.setBorderPainted(false);
         buttonnormalspeed.setContentAreaFilled(false);
+        buttonnormalspeed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonnormalspeedActionPerformed(evt);
+            }
+        });
 
         buttontwoxforward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/player/image/twoxforward.jpg"))); // NOI18N
         buttontwoxforward.setBorderPainted(false);
         buttontwoxforward.setContentAreaFilled(false);
+        buttontwoxforward.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttontwoxforwardActionPerformed(evt);
+            }
+        });
+
+        buttonnormalspeed2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/player/image/stopblue.jpg"))); // NOI18N
+        buttonnormalspeed2.setBorderPainted(false);
+        buttonnormalspeed2.setContentAreaFilled(false);
+        buttonnormalspeed2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonnormalspeed2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -265,9 +308,28 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(sliderTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panelVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(sliderTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(90, 90, 90))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(panelVideo, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(scrollPanePlayList, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelTime, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(sliderVolume, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(buttonOpenFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(169, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(buttonPause)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -281,98 +343,80 @@ public class GUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(buttonnormalspeed)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(buttonFastForward)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(buttontwoxforward)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(buttonFastForward)
+                                .addComponent(buttonnormalspeed2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(buttonMute)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(unmutebutton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(buttonFullScreen)
-                                .addGap(0, 54, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(buttonOpenFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(scrollPanePlayList, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelTime, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(sliderVolume, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 82, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(buttonFullScreen)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(jLabel1)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(buttonOpenFile)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(scrollPanePlayList, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)))
                     .addComponent(panelVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sliderVolume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(sliderTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addComponent(sliderTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(labelTime)
                                 .addGap(25, 25, 25)))
-                        .addGap(93, 93, 93)
+                        .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(buttonPlay)
-                                .addComponent(buttonStop)
-                                .addComponent(buttonRewind)
-                                .addComponent(buttonPause))
+                            .addComponent(buttonPause)
+                            .addComponent(buttonPlay)
+                            .addComponent(buttonStop)
+                            .addComponent(buttonRewind)
+                            .addComponent(buttontwoxrewind)
+                            .addComponent(buttonnormalspeed)
+                            .addComponent(buttonnormalspeed2)
+                            .addComponent(buttonFastForward)
                             .addComponent(buttonMute)
                             .addComponent(unmutebutton)
                             .addComponent(buttonFullScreen)
-                            .addComponent(buttontwoxrewind)
-                            .addComponent(buttonnormalspeed)
-                            .addComponent(buttonFastForward)
-                            .addComponent(buttontwoxforward, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(sliderVolume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                            .addComponent(buttontwoxforward, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPlayActionPerformed
-        
+
         //myPlayer.play();
-        if (myPlayer.playbin2.getState()==State.PAUSED){
+        if (myPlayer.playbin2.getState() == State.PAUSED) {
             myPlayer.play();
-        }else{
-            if (myPlayer.playList.size()>0){
+        } else {
+            if (myPlayer.playList.size() > 0) {
                 //myPlayer.play(myPlayer.playList.get(0).getTitle());
-                if (tablePlayList.getSelectedRow()!=-1){
+                if (tablePlayList.getSelectedRow() != -1) {
                     myPlayer.play(myPlayer.playList.get(tablePlayList.getSelectedRow()).getTitle());
-                }else{
+                } else {
                     myPlayer.play(myPlayer.playList.get(0).getTitle());
                 }
             }
         }
-        
-        if (myPlayer.absFileName!=null){
+
+        if (myPlayer.absFileName != null) {
             buttonPause.setVisible(true);
             buttonPlay.setVisible(false);
         }
@@ -381,19 +425,19 @@ public class GUI extends javax.swing.JFrame {
     private void buttonOpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenFileActionPerformed
         final JFileChooser fc = new JFileChooser();
         FileFilter fileFilter = new FileNameExtensionFilter(
-        "Audio/Video files(mp3,mp4,ogg,ogx,ogv,avi)", "mp3","mp4","ogg","ogx","ogv","avi");
+                "Audio/Video files(mp3,mp4,ogg,ogx,ogv,avi)", "mp3", "mp4", "ogg", "ogx", "ogv", "avi");
         fc.setAcceptAllFileFilterUsed(false);
         fc.addChoosableFileFilter(fileFilter);
-        
+
         int returnVal = fc.showOpenDialog(GUI.this);
-        
+
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             String absPathFile = fc.getSelectedFile().getAbsolutePath();
             String fileName = fc.getSelectedFile().getName();
-            
+
             myPlayer.playList.add(new MediaInfo(absPathFile, ""));
-            DefaultTableModel model =(DefaultTableModel) tablePlayList.getModel();
-            model.addRow(new Object[]{fileName,""} );
+            DefaultTableModel model = (DefaultTableModel) tablePlayList.getModel();
+            model.addRow(new Object[]{fileName, ""});
             //myPlayer.play(absPathFile);
             //buttonPlay.setVisible(false);
             //buttonPause.setVisible(true);
@@ -402,7 +446,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonOpenFileActionPerformed
 
     private void buttonStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStopActionPerformed
-        if (myPlayer.absFileName!=null){
+        if (myPlayer.absFileName != null) {
             myPlayer.stop();
             buttonPause.setVisible(false);
             buttonPlay.setVisible(true);
@@ -416,45 +460,69 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonPauseActionPerformed
 
     private void buttonMuteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMuteActionPerformed
-        if (buttonMute.getText().equalsIgnoreCase("Mute")){
-            myPlayer.mute();
-            buttonMute.setText("UnMute");
-        }else{
-            myPlayer.unMute();
-            buttonMute.setText("Mute");
-        }
-        
+        myPlayer.mute();
+        //buttonMute.setText("UnMute");
+        buttonMute.setVisible(false);
+        unmutebutton.setVisible(true);
+
     }//GEN-LAST:event_buttonMuteActionPerformed
 
     private void buttonFastForwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonFastForwardActionPerformed
-        if (buttonFastForward.getText().equalsIgnoreCase("stop")){
-            myPlayer.normalSpeed();
-            buttonFastForward.setText(">>");
-            buttonRewind.setEnabled(true);
-        }else{
-            myPlayer.fastForward();
-            buttonFastForward.setText("stop");
-            buttonRewind.setEnabled(false);
-        }
-        
+
+        myPlayer.fastForward();
+        buttonFastForward.setVisible(false);
+        buttontwoxforward.setVisible(true);
+
+
     }//GEN-LAST:event_buttonFastForwardActionPerformed
 
     private void buttonRewindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRewindActionPerformed
-        if (buttonRewind.getText().equalsIgnoreCase("stop")){
-            myPlayer.normalSpeed();
-            buttonRewind.setText("<<");
-            buttonFastForward.setEnabled(true);
-        }else{
-            myPlayer.rewind();
-            buttonRewind.setText("stop");
-            buttonFastForward.setEnabled(false);
-        }
+
+        myPlayer.rewind();
+        buttonRewind.setVisible(false);
+        buttontwoxrewind.setVisible(true);
+
     }//GEN-LAST:event_buttonRewindActionPerformed
 
     private void buttonFullScreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonFullScreenActionPerformed
         myPlayer.goFullScreen();
-        
+
     }//GEN-LAST:event_buttonFullScreenActionPerformed
+
+    private void buttontwoxrewindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttontwoxrewindActionPerformed
+        // TODO add your handling code here:
+        myPlayer.twoxrewind();
+        buttontwoxrewind.setVisible(false);
+        buttonnormalspeed.setVisible(true);
+    }//GEN-LAST:event_buttontwoxrewindActionPerformed
+
+    private void buttonnormalspeedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonnormalspeedActionPerformed
+        // TODO add your handling code here:
+        myPlayer.normalSpeed();
+        buttonnormalspeed.setVisible(false);
+        buttonRewind.setVisible(true);
+    }//GEN-LAST:event_buttonnormalspeedActionPerformed
+
+    private void buttontwoxforwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttontwoxforwardActionPerformed
+        // TODO add your handling code here:
+        myPlayer.twoxfastForward();
+        buttontwoxforward.setVisible(false);
+        buttonnormalspeed2.setVisible(true);
+    }//GEN-LAST:event_buttontwoxforwardActionPerformed
+
+    private void buttonnormalspeed2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonnormalspeed2ActionPerformed
+        // TODO add your handling code here:
+        myPlayer.normalSpeed();
+        buttonnormalspeed2.setVisible(false);
+        buttonFastForward.setVisible(true);
+    }//GEN-LAST:event_buttonnormalspeed2ActionPerformed
+
+    private void unmutebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unmutebuttonActionPerformed
+        myPlayer.unMute();
+        unmutebutton.setVisible(false);
+        buttonMute.setVisible(true);
+// TODO add your handling code here:
+    }//GEN-LAST:event_unmutebuttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -490,9 +558,7 @@ public class GUI extends javax.swing.JFrame {
                 theGUI.setVisible(true);
             }
         });
-        
-        
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -505,6 +571,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton buttonRewind;
     private javax.swing.JButton buttonStop;
     private javax.swing.JButton buttonnormalspeed;
+    private javax.swing.JButton buttonnormalspeed2;
     private javax.swing.JButton buttontwoxforward;
     private javax.swing.JButton buttontwoxrewind;
     private javax.swing.JLabel jLabel1;
@@ -519,34 +586,32 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton unmutebutton;
     // End of variables declaration//GEN-END:variables
 
-    public void setPlayer(AudioVideoPlayer player){
+    public void setPlayer(AudioVideoPlayer player) {
         this.myPlayer = player;
     }
-    
-    public void setPanelVideo(JComponent c){
+
+    public void setPanelVideo(JComponent c) {
         panelVideo.removeAll();
         panelVideo.add(c);
         revalidate();
         repaint();
     }
-    
-    public void streamFinished(){
+
+    public void streamFinished() {
         buttonPause.setVisible(false);
         buttonPlay.setVisible(true);
     }
-    
-    public void setSliderTime(int time){
-        sliderTime.setValue(time);       
+
+    public void setSliderTime(int time) {
+        sliderTime.setValue(time);
     }
-    
-    public void setSliderTimeMax(int maxTime){
+
+    public void setSliderTimeMax(int maxTime) {
         sliderTime.setMaximum(maxTime);
     }
-    
-    public void setLabelTime(String time){
+
+    public void setLabelTime(String time) {
         labelTime.setText(time);
     }
-    
-    
-    
+
 }
