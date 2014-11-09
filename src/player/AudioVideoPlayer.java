@@ -26,6 +26,7 @@ import javax.swing.WindowConstants;
 import model.MediaInfo;
 import org.gstreamer.Bus;
 import org.gstreamer.ClockTime;
+import org.gstreamer.ElementFactory;
 import org.gstreamer.Format;
 import org.gstreamer.Gst;
 import org.gstreamer.GstObject;
@@ -48,6 +49,7 @@ public class AudioVideoPlayer{
     
     private GUI myGUI;
     PlayBin2 playbin2;
+    PlayBin2 playbin2MediaInfo;
     int currentVolume;
     public boolean animationMode = true;
     
@@ -297,6 +299,36 @@ public class AudioVideoPlayer{
         }
         
     }
+    
+    public void updateMediaInfo(){
+        for(int i=0;i<playList.size();i++){
+            MediaInfo mi = playList.get(i);
+            System.out.println("a:"+mi.getTitle());
+            if (mi.getDuration()==null){
+                String duration = getMediaFileDuration(mi.getFullPath());
+                
+                mi.setDuration(duration);
+                System.out.println("media dur: "+mi.getDuration());
+                myGUI.updatePlayListTable(mi.getTitle(),mi.getDuration(),i);
+                
+            }
+            
+        }
+    }
+    
+    public String getMediaFileDuration(String completePath){
+        playbin2MediaInfo = new PlayBin2("MediaInfo");
+        playbin2MediaInfo.setInputFile(new File(completePath));
+        playbin2MediaInfo.setVideoSink(ElementFactory.make("fakesink", "videosink"));
+        playbin2MediaInfo.setState(State.PAUSED);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(AudioVideoPlayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return playbin2MediaInfo.queryDuration().toString();
+    }
+    
     
     public static void main(String[]args){
         AudioVideoPlayer myPlayer = new AudioVideoPlayer(args);

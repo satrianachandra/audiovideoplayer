@@ -22,6 +22,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import model.MediaInfo;
+import org.gstreamer.ClockTime;
 import org.gstreamer.State;
 
 /**
@@ -434,10 +435,13 @@ public class GUI extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             String absPathFile = fc.getSelectedFile().getAbsolutePath();
             String fileName = fc.getSelectedFile().getName();
-
-            myPlayer.playList.add(new MediaInfo(absPathFile, ""));
+            
+            
+            //ClockTime mediaFileDuration = myPlayer.getMediaFileDuration(absPathFile);
+            myPlayer.playList.add(new MediaInfo(absPathFile, null,absPathFile));
             DefaultTableModel model = (DefaultTableModel) tablePlayList.getModel();
             model.addRow(new Object[]{fileName, ""});
+            myPlayer.updateMediaInfo();
             //myPlayer.play(absPathFile);
             //buttonPlay.setVisible(false);
             //buttonPause.setVisible(true);
@@ -612,6 +616,13 @@ public class GUI extends javax.swing.JFrame {
 
     public void setLabelTime(String time) {
         labelTime.setText(time);
+    }
+    
+    public void updatePlayListTable(String fileName,String duration,int position){
+       System.out.println("dur"+duration);
+       DefaultTableModel model = (DefaultTableModel) tablePlayList.getModel();
+       model.setValueAt(duration, position, 1);
+       model.fireTableDataChanged();
     }
 
 }
